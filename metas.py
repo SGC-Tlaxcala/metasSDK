@@ -10,7 +10,7 @@ import yaml
 MIEMBRO = 'josa'
 VERSION = 1.0
 
-IMPORTS = """# -*- coding: UTF-8 -*-
+IMPORTS = """# coding: utf-8
 from django.conf import settings
 from django.db import models
 from core.models import Pipol, PUESTOS
@@ -23,7 +23,6 @@ from metas.forms import FormEvidenciaBase
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
 """
 
 
@@ -56,7 +55,7 @@ class Generador:
         clase = """
 class Formulario%s(FormEvidenciaBase):
     class Meta:
-        model = %s\n\n""" % (self.get_meta(), self.get_meta())
+        model = %s\n\n'""" % (self.get_meta(), self.get_meta())
         return clase
 
 
