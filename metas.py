@@ -32,7 +32,6 @@ class Generador:
         self.miembro = goal['miembro']
         self.id = goal['id']
         self.nombre = goal['nombre']
-        self.repeticiones = goal['repeticiones']
         self.campos = goal['campos']
 
     def get_campos(self):
