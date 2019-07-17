@@ -6,33 +6,11 @@
 #       fecha: martes, 19 de mayo de 2015
 
 
-import yaml
-MIEMBRO = 'josa'
-VERSION = 1.0
-
-IMPORTS = """# -*- coding: UTF-8 -*-
-from django.conf import settings
-from django.db import models
-from core.models import Pipol, PUESTOS
-from django.contrib.contenttypes.models import ContentType
-from django import forms
-
-from metas.models import Evidencia
-from metas.models import subir_archivo
-from metas.forms import FormEvidenciaBase
-
-from django.contrib.auth import get_user_model
-User = get_user_model()
-
-"""
-
-
 class Generador:
     def __init__(self, goal):
         self.miembro = goal['miembro']
         self.id = goal['id']
         self.nombre = goal['nombre']
-        self.repeticiones = goal['repeticiones']
         self.campos = goal['campos']
 
     def get_campos(self):
@@ -62,11 +40,42 @@ class Formulario%s(FormEvidenciaBase):
 
 
 if __name__ == '__main__':
-    file = '%s.yml' % MIEMBRO.lower()
-    metas = yaml.load_all(open(file).read())
-    print(IMPORTS)
-    for meta in metas:
-        m = Generador(meta)
-        print(m.get_model())
-        print(m.get_form())
+    import yaml
 
+    IMPORTS = """# coding: utf-8
+    from django.conf import settings
+    from django.db import models
+    from core.models import Pipol, PUESTOS
+    from django.contrib.contenttypes.models import ContentType
+    from django import forms
+
+    from metas.models import Evidencia
+    from metas.models import subir_archivo
+    from metas.forms import FormEvidenciaBase
+
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+
+    """
+
+    MIEMBRO = 'all'
+
+    file = '%s.yml' % MIEMBRO.lower()
+    salida = f'./mspe/{MIEMBRO.lower()}.py'
+
+    try:
+        f = open(salida, 'w', encoding='utf-8')
+    except FileNotFoundError:
+        print("No puedo escribir el archivo de salida")
+        exit()
+
+    try:
+        metas = yaml.load_all(open(file, encoding='utf-8').read(), Loader=yaml.Loader)
+        f.write(IMPORTS)
+        for meta in metas:
+            m = Generador(meta)
+            f.write(m.get_model())
+            f.write(m.get_form())
+        print("Archivo generado con éxito")
+    except FileNotFoundError:
+        print('No puedo abrir el archivo')

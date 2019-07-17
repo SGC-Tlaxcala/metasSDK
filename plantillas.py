@@ -6,13 +6,6 @@
 #       autor: Javier Sanchez Toledano
 #       fecha: martes, 19 de mayo de 2015
 
-
-import yaml
-import codecs
-
-VERSION = 1.0
-MIEMBRO = 'josa'
-
 HEADER = """{% extends "2014/metas/forms/evidencia.html" %}
 {% load sgc %}
 
@@ -39,8 +32,14 @@ class Plantilla:
 
 
 if __name__ == '__main__':
+    import yaml
+    import codecs
+
+    MIEMBRO = 'jmm2019'
+
     file = '%s.yml' % MIEMBRO.lower()
-    metas = yaml.load_all(open(file).read())
+    metas = yaml.load_all(open(file, encoding='utf-8').read(), Loader=yaml.Loader)
+
     for m in metas:
         file = "forms/%s%02d.html" % (m['miembro'].lower(), m['id'])
         f = codecs.open(file, mode="w", encoding="utf-8-sig")
@@ -60,6 +59,6 @@ if __name__ == '__main__':
       </div>
     </div>
     '''.format(campo=k, nombre=v[0])
-                f.write(control)
+        f.write(control)
         f.write(FOOTER)
         f.close()
