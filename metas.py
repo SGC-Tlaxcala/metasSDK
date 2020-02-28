@@ -43,22 +43,22 @@ if __name__ == '__main__':
     import yaml
 
     IMPORTS = """# coding: utf-8
-    from django.conf import settings
-    from django.db import models
-    from core.models import Pipol, PUESTOS
-    from django.contrib.contenttypes.models import ContentType
-    from django import forms
+from django.conf import settings
+from django.db import models
+from core.models import Pipol, PUESTOS
+from django.contrib.contenttypes.models import ContentType
+from django import forms
 
-    from metas.models import Evidencia
-    from metas.models import subir_archivo
-    from metas.forms import FormEvidenciaBase
+from metas.models import Evidencia
+from metas.models import subir_archivo
+from metas.forms import FormEvidenciaBase
 
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
-    """
+"""
 
-    MIEMBRO = 'all'
+    MIEMBRO = 've'
 
     file = '%s.yml' % MIEMBRO.lower()
     salida = f'./mspe/{MIEMBRO.lower()}.py'
@@ -79,3 +79,4 @@ if __name__ == '__main__':
         print("Archivo generado con éxito")
     except FileNotFoundError:
         print('No puedo abrir el archivo')
+

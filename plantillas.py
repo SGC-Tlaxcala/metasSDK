@@ -35,19 +35,20 @@ if __name__ == '__main__':
     import yaml
     import codecs
 
-    MIEMBRO = 'all'
+    MIEMBRO = 've'
 
     file = '%s.yml' % MIEMBRO.lower()
     metas = yaml.load_all(open(file, encoding='utf-8').read(), Loader=yaml.Loader)
 
     for m in metas:
+        control = ''
         file = "forms/%s%02d.html" % (m['miembro'].lower(), m['id'])
         f = codecs.open(file, mode="w", encoding="utf-8-sig")
         cam = m['campos']
         f.write(HEADER)
         for c in cam:
             for k, v in c.items():
-                control = '''
+                control += '''
     <div class="form-group">
       <label class="col-sm-2 control-label" for="id_{campo}">{nombre}</label>
       <div class="col-sm-8">
@@ -62,3 +63,4 @@ if __name__ == '__main__':
         f.write(control)
         f.write(FOOTER)
         f.close()
+
