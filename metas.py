@@ -10,7 +10,7 @@ class Generador:
     def __init__(self, goal):
         self.miembro = goal['miembro']
         self.id = goal['id']
-        self.nombre = goal['nombre']
+        # self.nombre = goal['nombre']
         self.campos = goal['campos']
 
     def get_campos(self):
@@ -42,7 +42,8 @@ class Formulario%s(FormEvidenciaBase):
 if __name__ == '__main__':
     import yaml
 
-    IMPORTS = """# coding: utf-8
+    IMPORTS = """
+# coding: utf-8
 from django.conf import settings
 from django.db import models
 from core.models import Pipol, PUESTOS
@@ -58,10 +59,11 @@ User = get_user_model()
 
 """
 
-    MIEMBRO = 've'
+    MIEMBRO = 'jmm'
 
     file = '%s.yml' % MIEMBRO.lower()
     salida = f'./mspe/{MIEMBRO.lower()}.py'
+    f = None
 
     try:
         f = open(salida, 'w', encoding='utf-8')
@@ -79,4 +81,3 @@ User = get_user_model()
         print("Archivo generado con éxito")
     except FileNotFoundError:
         print('No puedo abrir el archivo')
-

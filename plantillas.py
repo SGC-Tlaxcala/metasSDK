@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# coding: utf-8
 
 #         app: Generador de Modelos
 #      módulo: main
@@ -63,4 +63,3 @@ if __name__ == '__main__':
         f.write(control)
         f.write(FOOTER)
         f.close()
-
