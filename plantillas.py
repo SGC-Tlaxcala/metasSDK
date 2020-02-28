@@ -35,7 +35,7 @@ if __name__ == '__main__':
     import yaml
     import codecs
 
-    MIEMBRO = 've'
+    MIEMBRO = 'jmm'
 
     file = '%s.yml' % MIEMBRO.lower()
     metas = yaml.load_all(open(file, encoding='utf-8').read(), Loader=yaml.Loader)
