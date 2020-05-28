@@ -10,7 +10,6 @@ class Generador:
     def __init__(self, goal):
         self.miembro = goal['miembro']
         self.id = goal['id']
-        # self.nombre = goal['nombre']
         self.campos = goal['campos']
 
     def get_campos(self):
@@ -23,7 +22,10 @@ class Generador:
         clase = """class %s(Evidencia):""" % self.get_meta()
         for c in self.get_campos():
             for k, v in c.items():
-                blank = u'blank=True, null=True' if v[1] else ''
+                try:
+                   blank = u'blank=True, null=True' if v[1] else ''
+                except IndexError:
+                    blank = ''
                 clase += u"\n    %s = models.FileField('%s', upload_to=subir_archivo, %s)" % (k, v[0], blank)
         clase += u"""\n
     class Meta:
@@ -59,7 +61,7 @@ User = get_user_model()
 
 """
 
-    MIEMBRO = 'jmm'
+    MIEMBRO = 'all'
 
     file = '%s.yml' % MIEMBRO.lower()
     salida = f'./mspe/{MIEMBRO.lower()}.py'
