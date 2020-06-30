@@ -26,7 +26,9 @@ class Generador:
                    blank = u'blank=True, null=True' if v[1] else ''
                 except IndexError:
                     blank = ''
-                clase += u"\n    %s = models.FileField('%s', upload_to=subir_archivo, %s)" % (k, v[0], blank)
+                clase += \
+                    u"\n    %s = models.FileField('%s', upload_to=subir_archivo, %s)" %\
+                        (k, v[0], blank)
         clase += u"""\n
     class Meta:
         app_label = 'metas'
@@ -61,7 +63,7 @@ User = get_user_model()
 
 """
 
-    MIEMBRO = 'all'
+    MIEMBRO = 'josas'
 
     file = '%s.yml' % MIEMBRO.lower()
     salida = f'./mspe/{MIEMBRO.lower()}.py'
