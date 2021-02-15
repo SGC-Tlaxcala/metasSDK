@@ -5,25 +5,26 @@
 #       autor: Javier Sanchez Toledano
 #       fecha: martes, 19 de mayo de 2015
 
+import sys
 
 class Generador:
     def __init__(self, goal):
         self.miembro = goal['miembro']
-        self.id = goal['id']
+        self.id = goal['id'].replace('-', '')
         self.campos = goal['campos']
 
     def get_campos(self):
         return self.campos
 
     def get_meta(self):
-        return '%s%02d' % (self.miembro.upper(), self.id)
+        return '%s' % (self.id.upper())
 
     def get_model(self):
         clase = """class %s(Evidencia):""" % self.get_meta()
         for c in self.get_campos():
             for k, v in c.items():
                 try:
-                   blank = u'blank=True, null=True' if v[1] else ''
+                    blank = u'blank=True, null=True' if v[1] else ''
                 except IndexError:
                     blank = ''
                 clase += \
@@ -63,7 +64,7 @@ User = get_user_model()
 
 """
 
-    MIEMBRO = 'josas'
+    MIEMBRO = 'all'
 
     file = '%s.yml' % MIEMBRO.lower()
     salida = f'./mspe/{MIEMBRO.lower()}.py'
@@ -73,7 +74,7 @@ User = get_user_model()
         f = open(salida, 'w', encoding='utf-8')
     except FileNotFoundError:
         print("No puedo escribir el archivo de salida")
-        exit()
+        sys.exit()
 
     try:
         metas = yaml.load_all(open(file, encoding='utf-8').read(), Loader=yaml.Loader)
