@@ -49,7 +49,7 @@ if __name__ == '__main__':
     for m in metas:
         meta = Plantilla(m)
         control = ''
-        file = "forms/%s.html" % (meta.meta)
+        file = "forms/%s.html" % (meta.meta.upper())
         f = codecs.open(file, mode="w", encoding="utf-8-sig")
         cam = meta.campos
         f.write(HEADER)
