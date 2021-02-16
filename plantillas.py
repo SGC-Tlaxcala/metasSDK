@@ -12,7 +12,7 @@ HEADER = """{% extends "2014/metas/forms/evidencia.html" %}
 {% block formulario %}
 """
 
-FOOTER: str = """
+FOOTER = """
 {% endblock formulario %}"""
 
 
