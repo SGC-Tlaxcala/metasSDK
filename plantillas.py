@@ -17,48 +17,57 @@ FOOTER: str = """
 
 
 class Plantilla:
-    def __init__(self, meta):
-        self.miembro = meta['miembro']
-        self.id = meta['id']
-        self.nombre = meta['nombre']
-        self.repeticiones = meta['repeticiones']
-        self.campos = meta['campos']
+    def __init__(self, goal):
+        self._miembro = goal['miembro']
+        self._id = goal['id'].replace('-', '')
+        self._campos = goal['campos']
 
-    def get_campos(self):
-        return self.campos
+    @property
+    def campos(self):
+        return self._campos
 
-    def get_meta(self):
-        return '%s%02d' % (self.miembro.upper(), self.id)
+    @property
+    def meta(self):
+        return self._id
+
+    @property
+    def miembro(self):
+        return self._miembro
 
 
 if __name__ == '__main__':
     import yaml
     import codecs
 
-    MIEMBRO = 'josas'
+    MIEMBRO = 'all'
 
     file = '%s.yml' % MIEMBRO.lower()
-    metas = yaml.load_all(open(file, encoding='utf-8').read(), Loader=yaml.Loader)
+    metas = yaml.load_all(
+        open(file, encoding='utf-8').read(), 
+        Loader=yaml.Loader)
 
     for m in metas:
+        meta = Plantilla(m)
         control = ''
-        file = "forms/%s%02d.html" % (m['miembro'].lower(), m['id'])
+        file = "forms/%s.html" % (meta.meta)
         f = codecs.open(file, mode="w", encoding="utf-8-sig")
-        cam = m['campos']
+        cam = meta.campos
         f.write(HEADER)
         for c in cam:
             for k, v in c.items():
                 control += '''
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="id_{campo}">{nombre}</label>
-      <div class="col-sm-8">
-        {{{{ form.{campo} }}}}
-        <p class="help-block">
-          Seleccione el archivo para esta evidencia, 
-          <em>preferentemente <strong>en formato PDF</strong></em>
-        </p>
-      </div>
-    </div>
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="id_{campo}">
+    {nombre}
+  </label>
+  <div class="col-sm-8">
+    {{{{ form.{campo} }}}}
+    <p class="help-block">
+      Seleccione el archivo para esta evidencia,
+      <em>preferentemente <strong>en formato PDF</strong></em>
+    </p>
+  </div>
+</div>
     '''.format(campo=k, nombre=v[0])
         f.write(control)
         f.write(FOOTER)

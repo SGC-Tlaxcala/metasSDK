@@ -17,7 +17,7 @@ class Generador:
         return self.campos
 
     def get_meta(self):
-        return '%s' % (self.id.upper())
+        return self.id.upper()
 
     def get_model(self):
         clase = """class %s(Evidencia):""" % self.get_meta()
